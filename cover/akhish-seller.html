@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>آخیش | پنل فروشنده</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f3f6;--card:#fff;--ink:#0f1a4a;--mut:#6f6785;--pri:#5b2f78;--pri2:#4a2570;--tint:#f1e9fb;--line:#d3bfe0;--ok:#1f9d55;--okbg:#e3f6ea;--warn:#fdf0cf;--bad:#fde4e4;--shadow:0 6px 18px rgba(91,47,120,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#17121c;--card:#221a2b;--ink:#efe9f7;--mut:#a79bbb;--pri:#9a68c4;--pri2:#7d4aa8;--tint:#2d2238;--line:#4a3a5c;--okbg:#17382a;--warn:#3d3315;--bad:#4a1f26;--shadow:none}}
+*{box-sizing:border-box;margin:0;font-family:Vazirmatn,Tahoma,sans-serif}
+html,body{height:100%;background:var(--bg)}
+body{color:var(--ink);display:flex;justify-content:center}
+#app{width:100%;max-width:430px;height:100%;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+header{flex:none;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;background:var(--card);border-bottom:1px solid var(--line)}
+header .logo{font-weight:800;font-size:26px;color:var(--pri);margin-inline-start:auto;order:3}
+header h1{font-size:15px;font-weight:700;flex:1}
+main{flex:1;min-height:0;overflow-y:auto;padding:14px 16px 20px}
+nav{flex:none;display:flex;justify-content:space-around;align-items:center;background:var(--card);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(91,47,120,.1)}
+nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--ink);cursor:pointer;padding:4px 8px;border-radius:12px}
+nav button.on{color:var(--pri);font-weight:700}
+nav button.on svg{background:var(--pri);color:#fff;border-radius:12px;padding:8px;width:40px;height:40px}
+svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.card h2{font-size:16px;margin-bottom:6px}
+.mut{color:var(--mut);font-size:12.5px;line-height:1.9}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:14px;background:var(--pri2);color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin:10px 0;box-shadow:var(--shadow)}
+.btn.o{background:var(--card);color:var(--pri);border:1px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.5}
+.btn.s{display:inline-block;width:auto;padding:9px 16px;font-size:13px;margin:0}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
+input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;font-size:15px;background:var(--card);color:var(--ink);outline:none}
+input:focus-visible,button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+input.err{border-color:#b3265f}
+.errt{color:#b3265f;font-size:12px;margin-top:6px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--tint);border:0;border-radius:18px;padding:20px 8px;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
+.tile span{background:var(--card);border-radius:14px;padding:12px;display:flex}
+.chip{display:inline-block;font-size:11.5px;padding:4px 10px;border-radius:99px;background:var(--tint);color:var(--pri);font-weight:700}
+.chip.ok{background:var(--okbg);color:var(--ok)}.chip.w{background:var(--warn);color:#8a6a00}.chip.b{background:var(--bad);color:#b3262f}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tabs{display:flex;gap:8px;margin:12px 0;overflow-x:auto}
+.tabs button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:8px 16px;font-size:12.5px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--pri2);color:#fff}
+.otp{display:flex;gap:8px;direction:ltr;justify-content:center;margin:18px 0}
+.otp input{width:48px;height:56px;text-align:center;padding:0;font-size:20px;font-weight:700}
+.big{font-size:26px;font-weight:800;color:var(--pri)}
+.steps{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:12px;font-weight:700}
+.steps i{flex:1;height:2px;background:var(--line)}
+.dot{width:26px;height:26px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-style:normal}
+.dot.off{background:var(--tint);color:var(--mut)}
+.map{height:250px;border-radius:18px;overflow:hidden;margin-bottom:-18px;background:#e9e5d8}
+.sheet{position:relative;background:var(--card);border-radius:22px 22px 0 0;padding:16px;border:1px solid var(--line)}
+.prod{display:flex;gap:12px;align-items:center;background:var(--tint);border-radius:16px;padding:12px;margin:12px 0}
+.prod .img{width:64px;height:76px;border-radius:12px;background:linear-gradient(160deg,#cfd3dc,#6b7080);flex:none}
+.tl{display:flex;justify-content:space-between;text-align:center;font-size:11px;margin-top:14px}
+.tl div{flex:1}.tl b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;margin:0 auto 6px;background:var(--tint);color:var(--mut)}
+.tl .d b{background:var(--pri);color:#fff}
+.msg{max-width:80%;padding:9px 12px;border-radius:14px;background:var(--tint);font-size:13px;margin:8px 0}
+.msg.me{background:var(--pri);color:#fff;margin-inline-start:auto}
+.acc{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:var(--card);overflow:hidden}
+.acc button{width:100%;background:none;border:0;padding:13px;font-size:13.5px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;cursor:pointer;text-align:start}
+.acc p{display:none;padding:0 13px 13px;font-size:12.5px;line-height:2;color:var(--mut)}
+.acc.open p{display:block}.acc.open svg{transform:rotate(180deg)}
+.toast{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:9}
+.toast.on{opacity:1}
+.hero{background:linear-gradient(180deg,#3b2f45,#241c2b);color:#fff;margin:-14px -16px 16px;padding:28px 16px}
+.hero h2{font-size:24px;margin:10px 0}
+.list{display:flex;gap:12px;align-items:center}
+.thumb{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#5b2f78,#c9a7e0);flex:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"><header></header><main></main><nav></nav><div class="toast" id="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const P={home:'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',desk:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM17 14v6M14 17h6',mail:'M3 6h18v12H3zM3 7l9 6 9-6',sup:'M4 14v-2a8 8 0 0 1 16 0v2M4 14h3v5H4zM17 14h3v5h-3z',user:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',back:'M5 12h14M13 6l6 6-6 6',cart:'M3 4h3l2 11h10l2-8H7M9 20h.01M17 20h.01',box:'M12 3l8 4v10l-8 4-8-4V7zM4 7l8 4 8-4M12 11v10',wallet:'M3 7h16a2 2 0 0 1 2 2v9H5a2 2 0 0 1-2-2zM3 7l12-3v3M16 13h2',swap:'M4 8h16l-4-4M20 16H4l4 4',chart:'M4 4v16h16M8 15l4-4 3 3 5-6',book:'M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2zM12 6v14',q:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01',bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4',sl:'M4 8h10M18 8h2M4 16h2M10 16h10M16 6v4M8 14v4',dn:'M6 9l6 6 6-6',send:'M4 12l16-8-6 16-3-7z',lock:'M6 11h12v9H6zM8 11V8a4 4 0 0 1 8 0v3',pen:'M4 20l1-4L16 5l3 3L8 19zM14 7l3 3',ok:'M5 12l5 5 9-10'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24"><path d="${P[n]}"/></svg>`;
+const st={authed:false,phone:'',tab:'all',msgs:[['سلام، کالا هنوز موجوده؟',0],['بله، موجوده. پیشنهاد قیمت رو ارسال کردم.',1]]};
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200)};
+const go=h=>location.hash=h;
+const acc=(q,a)=>`<div class="acc"><button data-acc>${q}${ic('dn')}</button><p>${a}</p></div>`;
+const tile=(h,i,t)=>`<button class="tile" data-go="${h}"><span>${ic(i)}</span>${t}</button>`;
+const prod=(n,c,x)=>`<div class="prod"><div class="img"></div><div><b>${n}</b><div class="mut">${c} عدد</div>${x||''}</div></div>`;
+const lead=(t,s)=>`<div class="card"><h2>${t}</h2><p class="mut">${s}</p></div>`;
+
+const R={
+landing:{t:'',nav:0,f:()=>`<div class="hero"><span class="chip">آخیش برای فروشندگان</span><h2>در آخیش بفروشید!</h2><p class="mut" style="color:#d9cfe6">قیمت‌های خود را برای درخواست‌های خریداران ثبت کنید و فروش خود را بدون دغدغه آغاز کنید.</p><button class="btn" style="background:#1f7a55" data-go="login">ورود به پنل</button><button class="btn" data-go="login">ثبت نام</button></div>
+<div class="card"><h2>چرا در آخیش بفروشید؟</h2><p class="mut">سفارش فعال در سایت</p><div class="big">${fa(10629)}</div></div>
+<div class="grid"><div class="card"><b>${fa('+10K')}</b><p class="mut">سفارش روزانه</p></div><div class="card"><b>${fa('+200K')}</b><p class="mut">کاربر ماهانه</p></div></div>
+${[['ثبت نام در پنل فروشندگان','اطلاعات فروشگاه و هویت خود را ثبت کنید'],['تکمیل مدارک و تایید','مدارک فروشگاه و هویت را بارگذاری کنید'],['راه‌اندازی فروشگاه','محصولات، قیمت‌ها و سیاست‌های ارسال را تنظیم کنید'],['شروع فروش و پشتیبانی','فروش خود را آغاز کنید']].map((s,i)=>`<div class="card row"><div><b>${s[0]}</b><p class="mut">${s[1]}</p></div><span class="dot ${i?'off':''}">${fa(i+1)}</span></div>`).join('')}`},
+login:{t:'',nav:0,f:()=>`<div class="card" style="margin-top:20px"><div class="logo big" style="font-size:34px">آخیش</div><h2 style="font-size:22px;margin:8px 0">ورود / ثبت‌نام فروشنده</h2><p class="mut">برای ادامه، شماره تلفن خود را وارد کنید و ثبت‌نام را تکمیل کنید.</p><label for="ph">شماره تلفن</label><input id="ph" inputmode="numeric" maxlength="11" placeholder="09120000000" value="${st.phone}"><div class="errt" id="pe"></div><button class="btn" id="lg">ثبت‌نام فروشنده</button><p class="mut">با ثبت‌نام، شرایط و مقررات را می‌پذیرید.</p></div>`,
+ b(){const i=$('#ph'),b=$('#lg');b.onclick=()=>{const v=i.value.replace(/\D/g,'');if(v.length!==11){i.classList.add('err');$('#pe').textContent='شماره تلفن باید ۱۱ رقم باشد.';return}st.phone=v;b.disabled=true;b.textContent='در حال بررسی...';setTimeout(()=>go('otp'),900)}}},
+otp:{t:'',nav:0,f:()=>`<div class="card" style="margin-top:20px;text-align:center"><div class="logo big" style="font-size:34px">آخیش</div><h2 style="margin:10px 0">ورود</h2><p class="mut">کد ۶ رقمی ارسال شده به شماره تلفن شما را وارد کنید.</p><div class="otp">${[0,1,2,3,4,5].map(()=>'<input inputmode="numeric" maxlength="1">').join('')}</div><button class="btn" id="ok" disabled>ورود</button><p class="mut" id="cd"></p></div>`,
+ b(){const ins=[...document.querySelectorAll('.otp input')],ok=$('#ok');ins.forEach((e,i)=>{e.oninput=()=>{e.value=e.value.replace(/\D/g,'');if(e.value&&ins[i+1])ins[i+1].focus();ok.disabled=!ins.every(x=>x.value)};e.onkeydown=k=>{if(k.key==='Backspace'&&!e.value&&ins[i-1])ins[i-1].focus()}});ins[0].focus();ok.onclick=()=>go('register');let s=60;const c=$('#cd');const t=setInterval(()=>{if(!$('#cd')){clearInterval(t);return}s--;c.textContent=s>0?`ارسال مجدد کد یکبار مصرف (${fa(s)})`:'ارسال مجدد کد';if(s<=0)clearInterval(t)},1000);c.textContent='ارسال مجدد کد یکبار مصرف (۶۰)'}},
+register:{t:'ثبت‌نام',nav:0,f:()=>`<div class="steps"><span class="dot">۱</span>اطلاعات حساب<i></i><span class="dot off">۲</span>بارگذاری مدارک</div><h2 style="font-size:22px">اطلاعات حساب شما</h2><p class="mut">برای ادامه، اطلاعات حساب خود را وارد کنید.</p><label>نام و نام خانوادگی</label><input placeholder="نام و نام خانوادگی"><label>شماره موبایل</label><input value="${st.phone}" readonly><label>کد ملی</label><input inputmode="numeric" maxlength="10" placeholder="کد ملی خود را وارد کنید"><label>شماره شبا</label><input dir="ltr" placeholder="IR — — — —"><p class="mut">این شماره برای کیف پول می‌باشد.</p><button class="btn" data-go="docs">بعدی: بارگذاری مدارک</button>`},
+docs:{t:'ثبت‌نام',nav:0,f:()=>`<div class="steps"><span class="dot"> ${ic('ok').replace('class="i"','class="i" style="width:14px;height:14px"')}</span>اطلاعات حساب<i style="background:var(--pri)"></i><span class="dot">۲</span>بارگذاری مدارک</div><h2 style="font-size:22px">بارگذاری مدارک</h2><p class="mut">مدارک زیر را بارگذاری و سپس ثبت کنید.</p>${['کارت ملی','پروانه کسب','سند یا اجاره‌نامه تجاری'].map(d=>`<div class="card"><b>${d}</b><div class="list" style="margin-top:10px">${ic('ok')}<div><div>design-front.pdf</div><div class="mut">۲.۳ مگابایت • بارگذاری شد</div></div></div></div>`).join('')}<p class="chip ok">۳ از ۳ مدرک بارگذاری شد. آماده ثبت هستید.</p><button class="btn" id="sub">ثبت مدارک</button><button class="btn o" data-go="register">بازگشت به اطلاعات حساب</button>`,b(){$('#sub').onclick=()=>{st.authed=true;toast('مدارک ثبت شد');go('home')}}},
+home:{t:'',nav:1,f:()=>`<div class="grid">${tile('basket','cart','سبد پیشنهاد فروشنده')}${tile('desk','desk','میز کار')}${tile('product','box','ثبت کالا')}${tile('wallet','wallet','کیف پول')}${tile('tx','swap','تراکنش ها')}${tile('perf','chart','عملکرد')}${tile('learn','book','آموزش')}${tile('faq','q','سوالات متداول')}${tile('manage','sl','مدیریت کالا')}${tile('notifs','bell','اعلان')}</div>`},
+desk:{t:'میز کار',nav:1,f:()=>`<div class="map"><svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="400" height="250" fill="#e6e3d3"/><path d="M0 130C90 110 150 160 400 90" stroke="#a9cbd6" stroke-width="22" fill="none"/><g fill="#c6d0a8"><rect x="20" y="20" width="110" height="60" rx="8"/><rect x="250" y="150" width="120" height="70" rx="8"/><rect x="40" y="170" width="90" height="55" rx="8"/></g><circle cx="150" cy="70" r="16" fill="#fff" stroke="#5b2f78" stroke-width="3"/><circle cx="260" cy="130" r="18" fill="#5b2f78"/></svg></div>
+<div class="sheet"><div class="row"><button class="btn o s" data-go="offer">جزئیات بیشتر</button><div style="text-align:end"><h2>سفارش مشتری</h2><p class="mut">۳ کیلومتر فاصله تا فروشگاه</p></div></div>${prod('آیفون 16 پرو مکس',2)}<b>تخمین هزینه‌ها</b><div class="card" style="margin-top:10px"><p class="mut">تخمین هزینه ارسال</p><b>حدود ۱۵۰/۰۰۰ تومان</b></div><button class="btn" data-go="offer">ثبت قیمت</button></div>`},
+offer:{t:'جزئیات سفارش',nav:0,back:'desk',f:()=>`<div class="card">${prod('آیفون ۱۶ پرومکس',2,'<span class="chip">مشکی تیتانیوم</span> <span class="chip">۳ کیلومتر تا خریدار</span>')}</div><div class="card"><h2>توضیحات خریدار</h2><p class="mut">لطفاً گوشی پلمپ و بدون خط و خش باشد. در صورت امکان ارسال امروز انجام شود.</p></div><div class="card"><h2>برآورد هزینه‌ها</h2><label for="sh">هزینه ارسال (تومان)</label><input id="sh" inputmode="numeric" value="150000"><label for="pr">قیمت پیشنهادی محصول (تومان)</label><input id="pr" inputmode="numeric" placeholder="مبلغ را وارد کنید"></div><button class="btn" id="snd">ارسال پیشنهاد به خریدار</button>`,b(){$('#snd').onclick=()=>{if(!$('#pr').value.trim()){$('#pr').classList.add('err');toast('قیمت پیشنهادی را وارد کنید');return}toast('پیشنهاد برای خریدار ارسال شد');setTimeout(()=>go('basket'),700)}}},
+basket:{t:'سبد پیشنهاد فروشنده',nav:0,back:'home',f:()=>`<div class="card">${prod('آیفون ۱۶ پرومکس',2)}<p class="mut">مقصد: تهران، منطقه ۳</p></div><div class="card"><h2>وضعیت سفارش</h2><div class="tl"><div class="d"><b>${ic('ok')}</b>پیشنهاد شما</div><div class="d"><b>${ic('ok')}</b>تایید خریدار</div><div><b>${ic('wallet')}</b>پرداخت وجه</div><div><b>${ic('box')}</b>ارسال کالا</div></div></div><div class="card"><h2>تاریخچه پیشنهادها</h2>${[['۱۵,۰۰۰,۰۰۰','تایید شد','ok'],['۱۴,۸۰۰,۰۰۰','رد شد','b'],['۱۵,۵۰۰,۰۰۰','در انتظار','']].map(r=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="chip ${r[2]}">${r[1]}</span><b>${r[0]} تومان</b></div>`).join('')}</div><div class="card"><h2>پیام‌ها</h2><div id="ms"></div><div class="row" style="margin-top:10px"><input id="mi" placeholder="پیام خود را بنویسید..."><button class="btn s" id="ms2" aria-label="ارسال">${ic('send')}</button></div></div>`,
+ b(){const d=()=>$('#ms').innerHTML=st.msgs.map(m=>`<div class="msg ${m[1]?'me':''}">${m[0]}</div>`).join('');d();$('#ms2').onclick=()=>{const v=$('#mi').value.trim();if(v){st.msgs.push([v,1]);$('#mi').value='';d()}}}},
+wallet:{t:'کیف پول',nav:1,back:'home',f:()=>`<div class="card"><p class="mut">کیف پول فروشنده</p><div class="big" style="margin:8px 0">${fa('12,850,000')} تومان</div><div class="row"><button class="btn s" onclick="toast('افزایش اعتبار')">افزایش اعتبار</button><button class="btn o s" onclick="toast('درخواست برداشت ثبت شد')">برداشت وجه</button></div></div><div class="card"><div class="row"><h2>جایزه</h2><span class="chip">فعال</span></div><p class="mut">با تکمیل ۱۰ فروش، کد تخفیف ۱۰٪ بگیرید.</p><div style="height:10px;background:var(--tint);border-radius:9px;margin:10px 0"><div style="width:40%;height:100%;background:var(--pri);border-radius:9px"></div></div><p class="mut">۴ از ۱۰ هدف انجام شده</p></div><div class="card"><h2>تاریخچه تراکنش</h2><button class="btn o" data-go="tx">مشاهده تراکنش‌ها</button></div>`},
+tx:{t:'تراکنش ها',nav:1,back:'home',f:()=>{const L=[['R12563','پرداخت موفق','ok','هوشنگ آشتیانی','کیف دسته بازی xbox سری x','۱۰,۸۰۰,۰۰۰','all ok'],['R12562','در انتظار','w','سارا آشتیانی','Ghost of Tsushima','۲۸,۷۰۰,۰۰۰','all wait'],['R12561','ناموفق','b','علی رضایی','هدفون بی‌سیم','۴,۲۰۰,۰۰۰','all fail']];return`<div class="grid"><div class="card"><p class="mut">تراکنش‌های موفق</p><b class="big">${fa(8)}</b></div><div class="card"><p class="mut">مجموع دریافتی‌ها</p><b class="big" style="font-size:20px">${fa('12,850,000')}</b></div></div><input id="q" placeholder="جستجوی نام خریدار یا کد تراکنش"><div class="tabs">${[['all','همه'],['ok','موفق'],['wait','در انتظار'],['fail','ناموفق / برگشتی']].map(t=>`<button data-tab="${t[0]}" class="${t[0]=='all'?'on':''}">${t[1]}</button>`).join('')}</div>${L.map(r=>`<div class="card tr ${r[6]}"><div class="row"><b>تراکنش #${r[0]}</b><span class="chip ${r[2]}">${r[1]}</span></div><p class="mut">خریدار: ${r[3]}</p><p>${r[4]}</p><b class="big" style="font-size:16px">${r[5]} تومان</b></div>`).join('')}`},
+ b(){const f=()=>{const t=st.tab,q=$('#q').value.trim();document.querySelectorAll('.tr').forEach(e=>e.style.display=e.classList.contains(t)&&e.textContent.includes(q)?'':'none');document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===t))};document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{st.tab=b.dataset.tab;f()});$('#q').oninput=f;st.tab='all';f()}},
+notifs:{t:'اعلان‌ها',nav:1,back:'home',f:()=>`<div class="card"><span class="chip">۹ خوانده نشده</span></div>${[0,1,2].map(i=>acc(`<span>قابلیت جدید برای مدیریت سفارش<br><small class="mut">۱۴۰۵/۰۷/۱۲ - ۱۵:۲۰</small></span>`,'برای اینکه مدیریت سفارش‌های «ارسال ۳ ساعته» برای شما ساده‌تر و دقیق‌تر باشد، چند قابلیت جدید در پنل فروشندگان فعال شده است.')).join('')}`},
+support:{t:'پشتیبانی فروشندگان',nav:1,f:()=>`<div class="card"><h2>راهنمای سریع</h2><p class="mut">پاسخ سوالات خود را پیدا کنید یا درخواست جدید ثبت کنید.</p><button class="btn" onclick="toast('درخواست جدید ثبت شد')">ثبت درخواست جدید</button></div><div class="card"><h2>پیگیری درخواست</h2><input placeholder="کد پیگیری درخواست"></div><div class="card"><h2>موضوعات متداول</h2><div class="tabs" style="flex-wrap:wrap">${['ارسال و تحویل','قیمت‌گذاری','ثبت کالا','پرداخت و واریز','حساب کاربری'].map(x=>`<button>${x}</button>`).join('')}</div></div>${acc('چطور درخواست جدید ثبت کنم؟','موضوع را انتخاب و توضیحات درخواست را ثبت کنید.')}${acc('چطور درخواستم را پیگیری کنم؟','آخرین وضعیت درخواست‌ها را ببینید.')}`},
+profile:{t:'ویرایش پروفایل',nav:1,f:()=>`<div style="width:110px;height:110px;border:2px dashed var(--line);border-radius:50%;display:grid;place-items:center;margin:0 auto">${ic('user')}</div><div class="card" style="margin-top:16px"><h2>مشخصات فردی</h2><label>نام و نام خانوادگی</label><input placeholder="نام و نام خانوادگی"><label>نام کاربری</label><input value="seller_name" dir="ltr"><label>ایمیل</label><input value="example@example.com" dir="ltr"><label>شماره تماس</label><input value="0912 345 6789" dir="ltr"></div><button class="btn o">تغییر رمز عبور</button><button class="btn" onclick="toast('تغییرات ذخیره شد')">ذخیره</button><button class="btn o" data-go="home">انصراف</button>`},
+perf:{t:'عملکرد فروشنده',nav:1,back:'home',f:()=>`<div class="grid"><div class="card"><p class="mut">کیف پول</p><b>${fa('100,000,000')}</b></div><div class="card"><p class="mut">تعداد کالا</p><b>${fa(250)} عدد</b></div></div><div class="card"><h2>نمودار سود خالص هفتگی</h2><svg viewBox="0 0 300 140" width="100%"><path d="M0 130C60 128 90 90 130 85S200 60 230 40 280 25 300 20" fill="none" stroke="var(--pri)" stroke-width="3"/><path d="M0 130C60 128 90 90 130 85S200 60 230 40 280 25 300 20V140H0z" fill="var(--pri)" opacity=".1"/></svg></div><div class="card"><h2>پرفروش‌ترین کالاها</h2>${[1,2,3].map(()=>`<div class="list" style="margin:12px 0"><div class="thumb"></div><div><b>کولر گازی ۹۰۰۰ اجنرال مدل ۹</b><p class="mut">تعداد فروش ۲ • ${fa('100,000,000')} تومان</p></div></div>`).join('')}</div>`},
+learn:{t:'پنل آموزش فروشندگان',nav:1,back:'home',f:()=>`<div class="card" style="background:var(--pri2);color:#fff"><h2 style="font-size:20px">آموزش فروش در آخیش</h2><p style="font-size:13px;line-height:2">با ویدیوهای گام‌به‌گام، فروش خود را از صفر تا صد بگیرید.</p></div>${[1,2,3,4].map(()=>`<div class="card list"><div class="thumb"></div><div><b>آموزش گام به گام برای فروش در آخیش</b><p class="chip">سفارش</p></div></div>`).join('')}`},
+faq:{t:'سوالات متداول',nav:1,back:'home',f:()=>`<div class="card"><h2 style="font-size:22px">سوالات متداول</h2><p class="mut">پاسخ به سوالات رایج درباره مدیریت فروشگاه</p></div>${acc('چه زمانی درخواست‌های خرید را دریافت می‌کنم؟','وقتی دریافت درخواست‌ها را روشن کنید، درخواست‌های مرتبط با کالاهای شما برایتان ارسال می‌شود.')}${acc('تسویه حساب‌ها چطور و چه زمانی انجام می‌شود؟','پس از تایید خریدار و ارسال کالا، مبلغ به کیف پول شما واریز می‌شود.')}${acc('آیا ثبت‌نام و ایجاد غرفه در آخیش هزینه‌ای دارد؟','خیر، ثبت‌نام رایگان است.')}`},
+product:{t:'ثبت کالا',nav:1,back:'home',f:()=>lead('ثبت کالا','این بخش در نسخه بعدی تکمیل می‌شود.')},
+manage:{t:'مدیریت کالا',nav:1,back:'home',f:()=>lead('مدیریت کالا','این بخش در نسخه بعدی تکمیل می‌شود.')}
+};
+const grp={home:'home',desk:'desk',offer:'desk',notifs:'notifs',support:'support',faq:'support',profile:'profile'};
+const NAV=[['home','home','خانه'],['desk','desk','میزکار'],['notifs','mail','پیام ها'],['support','sup','پشتیبانی'],['profile','user','پروفایل']];
+function render(){
+ let n=location.hash.slice(1);if(!R[n])n=st.authed?'home':'landing';
+ const r=R[n];
+ $('header').innerHTML=`${r.back||(r.nav&&n!=='home')?`<button data-go="${r.back||'home'}" aria-label="بازگشت" style="background:none;border:0;color:var(--ink);cursor:pointer">${ic('back')}</button>`:''}<h1>${r.t}</h1><span class="logo">آخیش</span>`;
+ const nv=$('nav');nv.style.display=r.nav?'flex':'none';
+ nv.innerHTML=NAV.map(x=>`<button data-go="${x[0]}" class="${(grp[n]||'')===x[0]?'on':''}">${ic(x[1])}${x[2]}</button>`).join('');
+ const m=$('main');m.innerHTML=r.f();m.scrollTop=0;r.b&&r.b();
+}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);return}const a=e.target.closest('[data-acc]');if(a)a.parentElement.classList.toggle('open')});
+addEventListener('hashchange',render);render();
+</script>
+</body>
+</html>
